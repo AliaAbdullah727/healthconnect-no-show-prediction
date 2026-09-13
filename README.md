@@ -406,4 +406,52 @@ This project is being developed as part of the **AnalystLab Africa Experience La
 #AnalystLabAfrica
 ---
 
+## Week 6 — Model Improvement, Error Analysis & Validation
 
+Week 6 focused on improving and validating the Week 5 patient no-show prediction baseline.
+
+### Work Completed
+
+- Performed targeted analysis using findings from cross-track Data Analytics collaboration.
+- Investigated false positives and false negatives from the Week 5 Logistic Regression baseline.
+- Refined features based on previous no-show history, booking lead time, reminders and appointment characteristics.
+- Tested interaction features identified through deeper analysis.
+- Compared Logistic Regression, Random Forest and Gradient Boosting.
+- Performed feature-importance and decision-threshold analysis.
+- Selected Gradient Boosting as the Week 6 candidate model.
+- Prepared model requirements and preprocessing decisions for ML Engineering integration.
+
+### Model Comparison
+
+| Model | Accuracy | No-Show Recall | No-Show F1 | ROC-AUC |
+|---|---:|---:|---:|---:|
+| Baseline Logistic Regression | 0.63 | 0.65 | 0.64 | 0.68 |
+| Refined Logistic Regression | 0.64 | 0.66 | 0.64 | 0.68 |
+| Random Forest | 0.61 | 0.62 | 0.61 | 0.64 |
+| Gradient Boosting | 0.65 | 0.65 | 0.65 | 0.68 |
+
+### Key Findings
+
+Previous no-show history showed a clear relationship with future no-show behaviour.
+
+Booking lead time remained an important predictive signal and was also the highest-ranked feature in the Random Forest importance analysis.
+
+Reminder status showed an association with attendance, and this relationship varied across appointment types.
+
+Gradient Boosting provided the strongest overall classification performance, although improvement over Logistic Regression was modest.
+
+### Threshold Analysis
+
+The default 0.50 threshold provided balanced classification performance.
+
+A 0.45 threshold increased No-Show recall to approximately 74%, showing that the decision threshold could be adjusted if HealthConnect prioritizes identifying more potential no-shows.
+
+### Cross-Track Integration
+
+Data Analytics findings were used to guide feature investigation and modelling decisions.
+
+Data Science outputs, preprocessing decisions and model requirements were also shared with the ML Engineering track to support downstream pipeline integration.
+
+### Week 7
+
+The next stage will focus on model testing, stability, threshold validation, reproducibility and integration testing.
