@@ -455,3 +455,119 @@ Data Science outputs, preprocessing decisions and model requirements were also s
 ### Week 7
 
 The next stage will focus on model testing, stability, threshold validation, reproducibility and integration testing.
+
+## Week 7 — Model Testing, Refinement & Validation
+
+Week 7 focused on systematically testing the Gradient Boosting model selected in Week 6.
+
+The goal was to check whether the model generalised to unseen patients, identify weaknesses, refine the model where necessary, and validate the results.
+
+### Testing Completed
+
+- Performed 5-fold patient-grouped cross-validation.
+- Compared cross-validation and held-out test performance.
+- Tested for overfitting using training vs test performance.
+- Tuned the Gradient Boosting model based on the testing results.
+- Re-tested the refined model.
+- Evaluated performance across important patient and appointment segments.
+- Investigated false positives and false negatives.
+- Tested an alternative prediction threshold.
+- Validated an important model finding with the Data Analytics track.
+
+### Model Refinement
+
+The Week 6 Gradient Boosting model showed some evidence of overfitting.
+
+- Training ROC-AUC: **0.77**
+- Test ROC-AUC: **0.68**
+
+After tuning the model, held-out performance improved.
+
+| Metric | Week 6 Model | Tuned Week 7 Model |
+|---|---:|---:|
+| Accuracy | 0.65 | 0.66 |
+| No-Show Precision | 0.64 | 0.66 |
+| No-Show Recall | 0.65 | 0.67 |
+| No-Show F1 | 0.65 | 0.67 |
+| ROC-AUC | 0.68 | **0.72** |
+
+The tuned model also showed less evidence of overfitting.
+
+### Segment Testing
+
+Model performance was not consistent across all groups.
+
+**Previous no-show history**
+- Previous no-show: **78% recall**
+- No previous no-show: **58% recall**
+
+**Booking lead time**
+- >30 days: **94.3% recall**
+- ≤30 days: **23.0% recall**
+
+**Appointment type**
+- Diagnostic Test: **80% recall**
+- Specialist Consultation: **53% recall**
+
+The largest weakness was the model's ability to identify no-shows among appointments booked within 30 days.
+
+### Error Analysis
+
+False-negative no-shows had an average booking lead time of approximately **17 days**.
+
+Correctly identified no-shows had an average booking lead time of approximately **44 days**.
+
+This showed that the model performs better when stronger historical risk patterns are present.
+
+### Threshold Testing
+
+A lower classification threshold of **0.45** was tested.
+
+For appointments booked within 30 days, No-Show recall improved:
+
+**23.0% → 37.7%**
+
+However, accuracy decreased and the underlying weakness remained.
+
+The **0.50 threshold** was therefore retained as the main model threshold, while 0.45 remains a possible higher-recall alternative.
+
+### Cross-Track Validation
+
+The booking lead-time finding was independently checked with the Data Analytics track.
+
+Their analysis found:
+
+- ≤30 days: **36.84% actual no-show rate**
+- >30 days: **60.31% actual no-show rate**
+
+This supported booking lead time as an important risk factor.
+
+The model showed a much larger difference in recall between these groups, suggesting that it may rely heavily on booking lead time when identifying high-risk appointments.
+
+Earlier Data Analytics risk segmentation also helped guide the feature and segment testing performed during model validation.
+
+### Final Model
+
+The tuned Gradient Boosting model achieved:
+
+- **66% accuracy**
+- **66% No-Show precision**
+- **67% No-Show recall**
+- **67% No-Show F1-score**
+- **0.72 ROC-AUC**
+
+The model is best considered a **risk-screening and decision-support tool**, rather than a standalone decision system.
+
+### Remaining Limitations
+
+The model still has difficulty identifying:
+
+- Short-lead no-shows.
+- Patients without previous no-show history.
+- Some Specialist Consultation no-shows.
+
+These limitations should be considered during final HealthConnect integration.
+
+### Week 8
+
+Week 8 will focus on final integration, presentation, documentation, and communicating the validated HealthConnect solution.
